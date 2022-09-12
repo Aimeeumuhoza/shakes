@@ -1,25 +1,23 @@
-const  product= require("../model/product")
+const  Product= require("../model/product")
 
 const createproduct=async(req,res)=>{
     try{
-        
-        // const userid = req.user
-        console.log(req.user.data._id)
-        const task = await Task.create({ title:req.body.title,summary:req.body.summary, userId:'null' })
-        return res.status(200).json({message:"order created",order})
-
+      const product = await Product.create(req.body)
+       //successfully500
+       res.status(200).json({message:"product created successfully",product})
     }catch(err){
-        console.log(err)
-        res.status(404).json(err)
+       console.log(err);
+       //server error
+       res.status(500).json(err.message)
     }
-}
+   }
 
 const getproduct=async (req,res)=>{
     try{
         const id= req.params._id
-        const user= await Task.findById(id)
+        const product= await Product.findById(id)
       
-      res.status(200).json({message:"task found",user})
+      res.status(200).json({message:"product found",product})
     }
     catch(error){
         console.log(error);
@@ -30,8 +28,8 @@ const getproduct=async (req,res)=>{
 
 const getAllproducts=async (req,res)=>{
     try{
-        const tasks = await task.find()
-        return res.status(200).json({message:"task found",tasks})
+        const products = await Product.find()
+        return res.status(200).json({message:"product found",products})
     }
     catch(error){
         console.log(error);
@@ -45,8 +43,8 @@ const getAllproducts=async (req,res)=>{
 const delet=async(req,res)=>{
     try{
 const id=req.params._id
-const User=await task.findByIdAndRemove(id)
-res.status(200).json({message:"task deleted",User})
+const product=await Product.findByIdAndRemove(id)
+res.status(200).json({message:"product deleted",product})
     }catch(error){
         console.log(error);
         //server error
@@ -56,8 +54,8 @@ res.status(200).json({message:"task deleted",User})
 const updateproduct=async(req,res)=>{
     try{
    const id=req.params._id
-   const user=await task.findByIdAndUpdate(id,req.body)
-   return res.status({message:"product created",user})
+   const product=await Product.findByIdAndUpdate(id,req.body)
+   return res.status({message:"product created",product})
     }
     catch(error){
         console.log(error);

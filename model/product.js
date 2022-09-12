@@ -2,15 +2,12 @@ const mongoose=require ("mongoose")
 const validator=require("validator")
 
 const userSchema = new mongoose.Schema({
-   frostyimg:{
+   frostying:{
     type:String,
     default:'avatar',
         
     },
-    name:{
-        type:String,
-        required: [true,"name is required!"],
-    },
+    
     Ingredients:{
         type:String,
         required:true,
