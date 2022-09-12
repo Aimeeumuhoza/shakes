@@ -19,7 +19,7 @@ const getorder=async (req,res)=>{
         const id= req.params._id
         const user= await Task.findById(id)
       
-      res.status(200).json({message:"task found",user})
+      res.status(200).json({message:"got order",user})
     }
     catch(error){
         console.log(error);
@@ -31,7 +31,7 @@ const getorder=async (req,res)=>{
 const getAllorder=async (req,res)=>{
     try{
         const tasks = await task.find()
-        return res.status(200).json({message:"task found",tasks})
+        return res.status(200).json({message:"got all orders",tasks})
     }
     catch(error){
         console.log(error);
@@ -46,7 +46,7 @@ const delet=async(req,res)=>{
     try{
 const id=req.params._id
 const User=await task.findByIdAndRemove(id)
-res.status(200).json({message:"task deleted",User})
+res.status(200).json({message:"order deleted",User})
     }catch(error){
         console.log(error);
         //server error
@@ -57,7 +57,7 @@ const updatorder=async(req,res)=>{
     try{
    const id=req.params._id
    const user=await task.findByIdAndUpdate(id,req.body)
-   return res.status({message:"task created",user})
+   return res.status({message:"updated",user})
     }
     catch(error){
         console.log(error);
