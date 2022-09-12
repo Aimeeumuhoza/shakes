@@ -1,23 +1,21 @@
-const  order= require("../model/order")
+const  Order= require("../model/order")
 
-const creatorder=async(req,res)=>{
+const creatorder =async(req,res)=>{
     try{
-        
-        // const userid = req.user
-        console.log(req.user.data._id)
-        const task = await Task.create({ title:req.body.title,summary:req.body.summary, userId:'null' })
-        return res.status(200).json({message:"order created",order})
-
+      const user = await Order.create(req.body)
+       //successfully500
+       res.status(200).json({message:"order created successfully",user})
     }catch(err){
-        console.log(err)
-        res.status(404).json(err)
+       console.log(err);
+       //server error
+       res.status(500).json(err.message)
     }
-}
+   }
 
 const getorder=async (req,res)=>{
     try{
         const id= req.params._id
-        const user= await Task.findById(id)
+        const user= await Order.findById(id)
       
       res.status(200).json({message:"got order",user})
     }
@@ -30,8 +28,8 @@ const getorder=async (req,res)=>{
 
 const getAllorder=async (req,res)=>{
     try{
-        const tasks = await task.find()
-        return res.status(200).json({message:"got all orders",tasks})
+        const orders = await Order.find()
+        return res.status(200).json({message:"got all orders",orders})
     }
     catch(error){
         console.log(error);
@@ -45,8 +43,8 @@ const getAllorder=async (req,res)=>{
 const delet=async(req,res)=>{
     try{
 const id=req.params._id
-const User=await task.findByIdAndRemove(id)
-res.status(200).json({message:"order deleted",User})
+const order=await Order.findByIdAndRemove(id)
+res.status(200).json({message:"order deleted"})
     }catch(error){
         console.log(error);
         //server error
@@ -56,8 +54,8 @@ res.status(200).json({message:"order deleted",User})
 const updatorder=async(req,res)=>{
     try{
    const id=req.params._id
-   const user=await task.findByIdAndUpdate(id,req.body)
-   return res.status({message:"updated",user})
+   const order=await Order.findByIdAndUpdate(id,req.body)
+   return res.status({message:"updated",order})
     }
     catch(error){
         console.log(error);
