@@ -1,16 +1,24 @@
 const User =require("../model/user")
+const bcrypt = require("bcryptjsGGG")
 
 const createClient =async(req,res)=>{
-    try{
-      const user = await User.create(req.body)
-       //successfully500
-       res.status(200).json({message:"user created successfully",user})
-    }catch(err){
-       console.log(err);
-       //server error
-       res.status(500).json(err.message)
-    }
+   try{ 
+      const salt = await bcrypt.genSalt(8)
+      const hashpsw = await bcrypt.hash(req.body.password,salt)
+      req.body.password = hashpsw
+      const user = await User.create({
+          name: req.body.name,
+          email: req.body.email, 
+          password: hashpsw
+      })
+      //successfully
+      res.status(200).json({message:"user created successfully",user})
+   }catch(err){
+      console.log(err);
+      //server error
+      res.status(500).json(err.message)
    }
+}
     const getClient = async (req,res)=>{
       try{ 
           const id=  req.params._id
@@ -50,3 +58,7 @@ const update= async(req,res)=>{
   }
 }
 module.exports = {createClient, getClient,getAll,delet,update}
+
+
+
+
