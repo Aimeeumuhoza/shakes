@@ -1,5 +1,5 @@
 const User =require("../model/user")
-const bcrypt = require("bcryptjsGGG")
+const bcrypt = require("bcrypt")
 
 const createClient =async(req,res)=>{
    try{ 
