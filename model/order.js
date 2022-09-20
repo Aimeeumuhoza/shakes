@@ -3,7 +3,8 @@ const validator=require("validator")
 
 const orderSchema = new mongoose.Schema({
     userId :{
-        type: mongoose.type.objectId
+        type: String,
+        ref: "User"
     },
     products:[{
         productId:{

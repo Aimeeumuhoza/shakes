@@ -15,5 +15,5 @@ app.use("/product",productRoute)
 const port =  8000;
 dataB()
 app.listen(port,()=>{
-    console.log("server is connected")
+    console.log(`server is runnning on ${port}`)
 })

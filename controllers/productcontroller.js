@@ -1,14 +1,22 @@
 const  Product= require("../model/product")
+const cloudinary = require("../helper/cloudinary")
 
 const createproduct=async(req,res)=>{
     try{
-      const product = await Product.create(req.body)
+        const result = await cloudinary.uploader.upload(req.file.path)
+      const product = await Product.create({
+        title:req.body.title,
+        Ingredients:req.body.Ingredients,
+        price:req.body.price,
+        frostying: result.secure_url
+    })
+
        //successfully500
        res.status(200).json({message:"product created successfully",product})
-    }catch(err){
-       console.log(err);
+    }catch(error){
+       console.log("err",error);
        //server error
-       res.status(500).json(err.message)
+    //  res.status(500).json(err.message)
     }
    }
 

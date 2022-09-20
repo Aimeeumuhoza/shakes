@@ -17,8 +17,8 @@ const userSchema = new mongoose.Schema({
         required:true,
         },
     price:{
-         type:String,
-         required:true,
+            type:String,
+            required:true,
         }
        
     })
