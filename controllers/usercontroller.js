@@ -1,5 +1,6 @@
 const User =require("../model/user")
 const bcrypt = require("bcrypt")
+const {sign} = require("../helper/jwt")
 
 const createClient =async(req,res)=>{
    try{ 
@@ -19,6 +20,23 @@ const createClient =async(req,res)=>{
       res.status(500).json(err.message)
    }
 }
+const loginClient= async(req,res)=>{
+   try{
+       const user = await User.findOne({email: req.body.email})
+      
+       if(user){
+         const isMatch = await bcrypt.compare(req.body.password, user.password)
+          if(isMatch){
+            const token = await sign(user)
+            
+            return res.status(200).json({message:"user logged in successfully",token,user})
+          }
+       }
+   }catch(err){
+     console.log(err)
+      return res.status(400).json({error:err})
+   }
+}
     const getClient = async (req,res)=>{
       try{ 
           const id=  req.params._id
@@ -31,9 +49,10 @@ const createClient =async(req,res)=>{
     }
       const delet=async(req,res)=>{
         try{
-            const id=req.params._id
-            const user=await User.findByIdAndRemove(id)
-            res.status(200).json({message:"user deleted "})
+            const id= req.params._id
+           
+            const user=await User.findByIdAndDelete(id)
+            res.status(200).json({message:"user deleted ",user})
         }catch(error){
            console.log(error)
         }
@@ -57,7 +76,7 @@ const update= async(req,res)=>{
      console.log(error)
   }
 }
-module.exports = {createClient, getClient,getAll,delet,update}
+module.exports = {createClient, loginClient,getClient,delet,getAll,update}
 
 
 

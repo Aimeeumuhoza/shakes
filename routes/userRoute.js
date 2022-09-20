@@ -1,9 +1,10 @@
 const express = require("express")
-const {createClient,getClient,getAll,delet,update} = require("../controllers/userController")
+const {createClient,loginClient,getClient,getAll,delet,update} = require("../controllers/userController")
 
 const userRoute = express()
 
 userRoute.post("/create",createClient)
+userRoute.post("/login",loginClient)
 userRoute.get("/get/:_id",getClient)
 userRoute.get("/all",getAll)
 userRoute.delete("/delete/:_id",delet)

@@ -2,19 +2,30 @@ const mongoose=require ("mongoose")
 const validator=require("validator")
 
 const orderSchema = new mongoose.Schema({
-    name:{
-        type:String,
-        required: [true,"name is required!"],
+    userId :{
+        type: mongoose.type.objectId
     },
-    Ingredients:{
-        type:String,
-        required:true,
-       
+    products:[{
+        productId:{
+            type: String
         },
-        time:{
+        quantity:{
+            type: String
+        }
+    }],
+    amount:{
             type:String,
             required:true,
-        }
+        },
+    address:{
+        type: String
+    },
+    amount:{
+        type: String
+    },
+    status:{
+        type: String
+    }
        
     })
     const order = mongoose.model("orders",orderSchema)

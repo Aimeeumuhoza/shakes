@@ -1,5 +1,8 @@
  const mongoose = require("mongoose")
-const dbURL   ="mongodb+srv://umuhoza:umuhoza@cluster0.lq8fbsl.mongodb.net/frosty"
+ const dotenv = require("dotenv")
+ dotenv.config()
+ const dbURL   = process.env.MONGODB_URL
+ 
 
 const dataB = async()=>{
     try {
