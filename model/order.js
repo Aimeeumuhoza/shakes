@@ -21,13 +21,11 @@ const orderSchema = new mongoose.Schema({
     address:{
         type: String
     },
-    amount:{
-        type: String
-    },
     status:{
-        type: String
+        type: String,
+        default:"pending"
     }
        
     })
     const order = mongoose.model("orders",orderSchema)
-module.exports = order
+    module.exports = order
