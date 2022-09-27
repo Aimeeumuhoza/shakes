@@ -30,7 +30,13 @@ const mailer = async (info, action) =>{
             </p>`;
 
             break;
-
+            case "createOrder":
+                 subject="order completed";
+                 emailto = info.email;
+                 composition = `<p>
+                 your Order successfully completed kindly soon get it!
+             </p>`;
+             break;
             default:
                 subject ="";
                 break;

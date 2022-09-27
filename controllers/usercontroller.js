@@ -9,17 +9,17 @@ const createClient =async(req,res)=>{
       const hashpsw = await bcrypt.hash(req.body.password,salt)
       req.body.password = hashpsw
 
-      const isExist = await User.findOne({email:req.body.email})
-      if(isExist){
-         return res.status(200).json({message:"email already exist try another one!"})
-      }
+      // const isExist = await User.findOne({email:req.body.email})
+      // if(isExist){
+      //    return res.status(200).json({message:"email already exist try another one!"})
+      // }
       const user = await User.create({
           name: req.body.name,
           email: req.body.email, 
           password: hashpsw
       })
 
-       await mailer({email:req.body.email} ,"createAcount").catch((error)=>{
+       await mailer({email:user.email} ,"createAccount").catch((error)=>{
          console.log(error)
        })
       //successfully
@@ -37,7 +37,7 @@ const loginClient= async(req,res)=>{
        if(user){
          const isMatch = await bcrypt.compare(req.body.password, user.password)
           if(isMatch){
-            const token = await sign(user)
+            const token = await sign({id:user._id,email:user.email,password:user.password})
             
             return res.status(200).json({message:"user logged in successfully",token,user})
           }
