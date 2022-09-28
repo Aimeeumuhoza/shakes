@@ -8,7 +8,7 @@ const verifyToken = (req,res,next)=>{
    }
    req.token =token
    req.user = user
-  //  console.log(req.user.data._id)
+ 
    
   next()
 }

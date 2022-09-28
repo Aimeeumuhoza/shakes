@@ -1,20 +1,25 @@
-const  Order= require("../model/order")
-const mailer= require("../helper/transport")
+const  Order= require("../model/order");
+const mailer= require("../helper/transport");
+const User = require("../model/user");
+
 
 const creatorder =async(req,res)=>{
     
     try{
-        const id = req.user.data._id
-       
-      const user = await Order.create({
+        const id = req.user.data.id
+
+      const order = await Order.create({
         userId:id,
         products:req.body.products,
         amount:req.body.amount,
         address:req.body.address,
         status: req.body.status
       })
+      const user=await User.findById(id).select("email")
+
        //successfully500
-       res.status(200).json({message:"order created successfully",user})
+       res.status(200).json({message:"order created successfully",order})
+      await mailer({email:user},"createOrder" )
     }catch(err){
        console.log(err);
        //server error
@@ -73,18 +78,22 @@ const updatorder=async(req,res)=>{
         res.status(500).json(error.message)
     }
 } 
+//association 
 const updatestatus=async(req,res)=>{
     try{
     const id = req.params._id 
-    const email = req.user.data.email
     const {status} = req.body
     const order = await Order.findOne({id})
-    
 
+    // access userid from order model to find user email
+    const user = await User.findById(order.userId).select('email')
+    console.log(user);
+    
     if(order){
     const order=await Order.findByIdAndUpdate(id,{status},{new:true})
     
-    await mailer(email,"createOrder")
+    // const email = user.email
+    await mailer({email:user},"updateOrder" )
     return res.status(200).json({message:`order ${status} successfully`,order})
 
     }
