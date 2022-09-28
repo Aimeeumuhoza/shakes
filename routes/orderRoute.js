@@ -1,6 +1,6 @@
 const express = require("express")
 const {creatorder,getorder,delet,updatorder, getAllorder,updatestatus} = require("../controllers/ordercontroller")
-const verifyToken  = require("../middleware/verifyToken")
+const {verifyToken}  = require("../middleware/verifyToken")
 
 const orderRoute = express()
 

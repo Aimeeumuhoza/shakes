@@ -37,7 +37,25 @@ const loginClient= async(req,res)=>{
        if(user){
          const isMatch = await bcrypt.compare(req.body.password, user.password)
           if(isMatch){
-            const token = await sign({id:user._id,email:user.email,password:user.password})
+            const token = await sign({id:user._id,email:user.email,password:user.password, role:"user"})
+            
+            return res.status(200).json({message:"user logged in successfully",token,user})
+          }
+       }
+   }catch(err){
+     console.log(err)
+      return res.status(400).json({error:err})
+   }
+}
+
+const loginAdmin= async(req,res)=>{
+   try{
+       const user = await User.findOne({email: req.body.email})
+      
+       if(user){
+         const isMatch = await bcrypt.compare(req.body.password, user.password)
+          if(isMatch){
+            const token = await sign({id:user._id,email:user.email,password:user.password, role:"admin"})
             
             return res.status(200).json({message:"user logged in successfully",token,user})
           }
@@ -86,7 +104,7 @@ const update= async(req,res)=>{
      console.log(error)
   }
 }
-module.exports = {createClient, loginClient,getClient,delet,getAll,update}
+module.exports = {createClient, loginClient,getClient,delet,getAll,update, loginAdmin}
 
 
 
