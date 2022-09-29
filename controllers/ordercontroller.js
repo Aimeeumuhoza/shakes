@@ -30,9 +30,9 @@ const creatorder =async(req,res)=>{
 const getorder=async (req,res)=>{
     try{
         const id= req.params._id
-        const user= await Order.findById(id)
+        const order= await Order.findById(id)
       
-      res.status(200).json({message:"got order",user})
+      res.status(200).json({message:"got order",order})
     }
     catch(error){
         console.log(error);
