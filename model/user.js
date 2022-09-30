@@ -4,10 +4,7 @@ const validator=require("validator")
 const userSchema = new mongoose.Schema({
     name:{
         type: String,
-        required: [true,"name is required!"]
-        
-        
-        
+        required: [true,"name is required!"]   
     },
     email:{
         type: String,
@@ -17,13 +14,17 @@ const userSchema = new mongoose.Schema({
                 throw new Error("email must valid")
             }
         }
-
     },
     password:{
         type: String,
         minlength: [6,"password must have 6 character"]
     },
     
+    role:{
+        type: String,
+        enum:["client","admin"],
+        default: "client"
+    }
         
     })
     const User = mongoose.model("user",userSchema)

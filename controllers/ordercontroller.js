@@ -29,7 +29,9 @@ const creatorder =async(req,res)=>{
 
 const getorder=async (req,res)=>{
     try{
-        const id= req.params._id
+        //const id= req.params._id
+        const id = await User.findById(order.userId)
+
         const order= await Order.findById(id)
       
       res.status(200).json({message:"got order",order})
