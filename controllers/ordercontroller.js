@@ -41,6 +41,22 @@ const getorder=async (req,res)=>{
         //server error
         
     }
+    console.log(order);
+}
+const getclientorder=async (req,res)=>{
+    try{
+        
+        const id = await Order.findById(id)
+
+        const client= await User.findById(id)
+      
+      res.status(200).json({message:"got order",client})
+    }
+    catch(error){
+        console.log(error);
+        //server error
+        
+    }
 }
 
 const getAllorder=async (req,res)=>{
@@ -109,4 +125,4 @@ catch(error){
     res.status(500).json(error.message)
 }
 }
-module.exports ={creatorder,getorder,delet,updatorder,getAllorder,updatestatus}
+module.exports ={creatorder,getorder,delet,updatorder,getAllorder,updatestatus,getclientorder}

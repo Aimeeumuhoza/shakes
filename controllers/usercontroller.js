@@ -30,7 +30,7 @@ const createClient =async(req,res)=>{
       res.status(500).json(err.message)
    }
 }
-const loginClient= async(req,res)=>{
+const login= async(req,res)=>{
    try{
        const user = await User.findOne({email: req.body.email})
       
@@ -88,7 +88,7 @@ const update= async(req,res)=>{
      console.log(error)
   }
 }
-module.exports = {createClient, loginClient,getClient,delet,getAll,update}
+module.exports = {createClient, login,getClient,delet,getAll,update}
 
 
 

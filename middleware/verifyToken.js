@@ -16,7 +16,7 @@ const verifyTokenAndAdmin = async(req,res,next) => {
 
   const token =  req.headers.authorization
   const user = verify(token)
-    if(user.role === "admin"){
+    if(user.data.role === "admin"){
       next()
     }else{
       res.status(500).json("you don't have access")
@@ -27,7 +27,7 @@ const verifyTokenAndAdmin = async(req,res,next) => {
 const verifyTokenAndUser = (req,res,next)=>{
   const token =  req.headers.authorization
   const user = verify(token)
-    if(user._id === req.params._id){
+    if(user.data._id === req.params._id || "client" ){
       next()
     }else{
       res.status(500).json("you don't have access")

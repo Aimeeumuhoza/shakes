@@ -5,9 +5,9 @@ const createproduct=async(req,res)=>{
     try{
         const result = await cloudinary.uploader.upload(req.file.path)
       const product = await Product.create({
-        title:req.body.title,
-        Ingredients:req.body.Ingredients,
-        price:req.body.price,
+         username: req.body.name,
+           email: req.body.email, 
+           password: req.body.password,
         frostying: result.secure_url
     })
 
